@@ -1,0 +1,98 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/vDevPreview/MicrosoftTeams.schema.json",
+  "manifestVersion": "devPreview",
+  "id": "rlsd-odoo-outlook-addin",
+  "version": "1.0.0",
+  "name": {
+    "short": "RLSD Odoo",
+    "full": "RLSD Odoo Integration for Outlook"
+  },
+  "description": {
+    "short": "Access Odoo documents and contacts from Outlook",
+    "full": "Attach Odoo documents to emails, save attachments to records, create invoices/orders, manage contacts — all from within Outlook."
+  },
+  "developer": {
+    "name": "RL Software Development ApS",
+    "websiteUrl": "https://www.rlsd.dk",
+    "privacyUrl": "https://www.rlsd.dk/privacy",
+    "termsOfUseUrl": "https://www.rlsd.dk/terms"
+  },
+  "icons": {
+    "color": "assets/icon-192.png",
+    "outline": "assets/icon-32.png"
+  },
+  "accentColor": "#2E7D32",
+  "extensions": [
+    {
+      "requirements": {
+        "scopes": ["mail"]
+      },
+      "runtimes": [
+        {
+          "requirements": {
+            "capabilities": [
+              { "name": "Mailbox", "minVersion": "1.5" }
+            ]
+          },
+          "id": "TaskPaneRuntime",
+          "type": "general",
+          "code": {
+            "page": "https://rlsd-mach.github.io/rlsd-outlook-addin/taskpane.html"
+          },
+          "lifetime": "short",
+          "actions": [
+            { "id": "showTaskPane", "type": "openPage", "view": "main" }
+          ]
+        }
+      ],
+      "ribbons": [
+        {
+          "contexts": ["mailRead", "mailCompose"],
+          "tabs": [
+            {
+              "builtInTabId": "TabDefault",
+              "groups": [
+                {
+                  "id": "rlsdOdooGroup",
+                  "label": "RLSD Odoo",
+                  "icons": [
+                    { "size": 16, "url": "assets/icon-16.png" },
+                    { "size": 32, "url": "assets/icon-32.png" },
+                    { "size": 80, "url": "assets/icon-80.png" }
+                  ],
+                  "controls": [
+                    {
+                      "id": "openTaskPane",
+                      "type": "button",
+                      "label": "Odoo",
+                      "icons": [
+                        { "size": 16, "url": "assets/icon-16.png" },
+                        { "size": 32, "url": "assets/icon-32.png" },
+                        { "size": 80, "url": "assets/icon-80.png" }
+                      ],
+                      "supertip": {
+                        "title": "Open RLSD Odoo",
+                        "description": "Access Odoo documents, contacts and actions for this email"
+                      },
+                      "actionId": "showTaskPane"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "authorization": {
+    "permissions": {
+      "resourceSpecific": [
+        {
+          "name": "Mailbox.ReadWrite.User",
+          "type": "Delegated"
+        }
+      ]
+    }
+  }
+}
